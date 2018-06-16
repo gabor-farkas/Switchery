@@ -1,50 +1,55 @@
 #include "MatrixDisplay.h"
-#include "Keypad.h"
+#include "Buttons.h"
+#include "Characters.h";
 
 
 MatrixDisplay * matrixDisplay;
-Keypad * keypad;
+Buttons * buttons;
+Characters * characters;
+
 
 void setup()
 {
 	matrixDisplay = new MatrixDisplay();
-	keypad = new Keypad();
+	buttons = new Buttons();
+	characters = new Characters();
 
 	matrixDisplay->setup();
-	keypad->setup();
+	buttons->setup();
 }
-
-short image2[] =
-{ 0b00000000, 0b00000000, 0b00000000, 0b00000000,
-0b00000000, 0b00000000, 0b00000000, 0b00000000,
-0b00000000, 0b00000000, 0b00000000, 0b00000000,
-0b00000000, 0b00000000, 0b00000000, 0b00000000,
-0b00000000, 0b00000000, 0b00000000, 0b00000000,
-0b00000000, 0b00000000, 0b00000000, 0b00000000,
-0b00000000, 0b00000000, 0b00000000, 0b00000000,
-0b00000000, 0b00000000, 0b00000000, 0b00000000 };
-
 
 short x = 10;
 short y = 4;
+byte num = 0;
+int counter = 0;
+
 void drawScene() {
 	short byteX = x / 8;
 	short bitX = 1 << (x % 8);
-	for (short i = 0; i < 8 * 4; i++) {
-		image2[i] = 0;
-	}
-	image2[y * 4 + byteX] |= bitX;
-	for (int i = 0; i < 8; i++) {
-		matrixDisplay->writeRegisters(8 - i, image2[i * 4], image2[i * 4 + 1], image2[i * 4 + 2], image2[i * 4 + 3]);
-	}
+	matrixDisplay->clear();
+	matrixDisplay->getImageBuffer()[y * 4 + byteX] |= bitX;
+	byte charX = (counter / 2) & 31;
+	characters->draw(matrixDisplay->getImageBuffer(), (byte *)(&NUMBERS), 5, 3, num, charX, 1);
+	matrixDisplay->draw();
 }
 
 
 void loop()
 {
+	Serial.begin(9600);
 	while (true) {
-		delay(10);
-		short charCode = keypad->readChar();
+		delay(100);
+		x = (x+1) & 31;
+		y = round((sin((counter++) / 10.0) * 3.5 + 3.5));
+		drawScene();
+		short charCode = buttons->read();
+		if (charCode != -1) {
+			Serial.printf("%04x\n", charCode);
+			if (charCode >> 4 == NL) {
+				num = charCode & 0xF;
+			}
+		}
+		/*
 		if (charCode != -1) {
 			if (charCode == 4) {
 				x--;
@@ -60,5 +65,6 @@ void loop()
 			}
 			drawScene();
 		}
+		*/
 	}
 }
