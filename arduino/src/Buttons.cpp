@@ -33,8 +33,19 @@ short Buttons::read() {
 				case PL:
 					pressedButton |= subIndex * 2 + i;
 					break;
+				case PR:
+					pressedButton |= subIndex * 2 + (i - 2);
+					break;
 				case NL: {
 					byte rowIndex = i - 4;
+					byte numCode = subIndex * 3 + rowIndex + 1;
+					if (numCode == 11) numCode = 0;
+					if (numCode == 12) numCode = 11;
+					pressedButton |= numCode;
+					break;
+				}
+				case NR: {
+					byte rowIndex = i - 7;
 					byte numCode = subIndex * 3 + rowIndex + 1;
 					if (numCode == 11) numCode = 0;
 					if (numCode == 12) numCode = 11;

@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <style>
+            #canvas {
+                width: 100%;
+            }
+            #canvas > div > div {
+                width: 40pt;
+                height: 40pt;
+                margin: 10pt;
+                border-radius: 40pt;
+                border: 1px solid black;
+                display: inline-block;
+            }
+            #canvas div.checked {
+                background-color: red;
+            }
+            #c {
+                white-space: pre;
+                font-family: 'Courier New', Courier, monospace;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <div class="config">
+                <input type="number" id="width" value="8">
+                <input type="number" id="height" value="8">
+            </div>
+            <div id="canvas">
+
+            </div>
+            <div id="c">
+
+            </div>
+        </div>
+        <script>
+            let image = [];
+            let id = x => document.getElementById(x);
+            function renderCanvas() {
+                let canvasDiv = id('canvas');
+                canvasDiv.innerHTML = '';
+                let width = id('width').value;
+                let height = id('height').value;
+                for (let i = 0; i < height; i ++) {
+                    let rowDiv = document.createElement('div');
+                    canvasDiv.append(rowDiv);
+                    if (!image[i]) image[i] = [];
+                    for (let j = 0; j < width; j ++) {
+                        let pixelDiv = document.createElement('div');
+                        rowDiv.appendChild(pixelDiv);
+                        pixelDiv.onclick = function() {
+                            if (!image[i]) image[i] = [];
+                            image[i][j] = !image[i][j];
+                            if (image[i][j]) {
+                                pixelDiv.classList.add('checked');
+                            } else {
+                                pixelDiv.classList.remove('checked');
+                            }
+                            refreshC();
+                        }
+                    }
+                }
+            }
+            renderCanvas();
+            function refreshC() {
+                let cDiv = id('c');
+                let src = '';
+                let width = id('width').value;
+                let height = id('height').value;
+                for (let i = 0; i < height; i ++) {
+                    let line = '0b';
+                    for (let j = 0; j < height; j ++) {
+                        line += image[i][j] ? '1' : '0';
+                    }
+                    src += line + ',\n';
+                }    
+                cDiv.innerText = src;
+            }
+        </script>
+    </body>
+</html>

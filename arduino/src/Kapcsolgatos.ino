@@ -1,21 +1,17 @@
-#include "MatrixDisplay.h"
-#include "Buttons.h"
-#include "Characters.h";
+#include "Board.h"
+#include "Characters.h"
+#include "programs/FourDigits.h"
+#include "programs/ImagePad.h"
 
-
-MatrixDisplay * matrixDisplay;
-Buttons * buttons;
+Board * board;
 Characters * characters;
-
 
 void setup()
 {
-	matrixDisplay = new MatrixDisplay();
-	buttons = new Buttons();
+	board = new Board();
 	characters = new Characters();
 
-	matrixDisplay->setup();
-	buttons->setup();
+	board->setup();
 }
 
 short x = 10;
@@ -26,8 +22,8 @@ int counter = 0;
 void drawScene() {
 	short byteX = x / 8;
 	short bitX = 1 << (x % 8);
-	matrixDisplay->clear();
-	byte * imageBuffer = matrixDisplay->getImageBuffer();
+	board->getMatrixDisplay()->clear();
+	byte * imageBuffer = board->getMatrixDisplay()->getImageBuffer();
 	imageBuffer[y * 4 + byteX] |= bitX;
 	byte charX = (counter / 2) & 31;
 	byte lowCount = (counter / 4) & 7;
@@ -35,40 +31,32 @@ void drawScene() {
 		imageBuffer[i*4] |= (1 << lowCount);
 	}
 	characters->draw(imageBuffer, (byte *)(&NUMBERS), 5, 3, num, charX, 1);
-	matrixDisplay->draw();
+	board->getMatrixDisplay()->draw();
 }
 
 
 void loop()
 {
 	Serial.begin(9600);
+	FourDigits * p = new FourDigits(board);
+	ImagePad * ip = new ImagePad(board);
 	while (true) {
-		delay(100);
+		delay(25);
+		board->readChar();
+		board->getMatrixDisplay()->clear();
+		p->loop();
+		ip->loop();
+		board->getMatrixDisplay()->draw();
 		x = (x+1) & 31;
 		y = round((sin((counter++) / 10.0) * 3.5 + 3.5));
-		drawScene();
-		short charCode = buttons->read();
+		//drawScene();
+		/*
+		short charCode = board->getButtons()->read();
 		if (charCode != -1) {
 			Serial.printf("%04x\n", charCode);
 			if (charCode >> 4 == NL) {
 				num = charCode & 0xF;
 			}
-		}
-		/*
-		if (charCode != -1) {
-			if (charCode == 4) {
-				x--;
-			}
-			if (charCode == 6) {
-				x++;
-			}
-			if (charCode == 2) {
-				y--;
-			}
-			if (charCode == 8) {
-				y++;
-			}
-			drawScene();
 		}
 		*/
 	}

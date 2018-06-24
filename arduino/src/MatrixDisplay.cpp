@@ -70,6 +70,6 @@ byte * MatrixDisplay::getImageBuffer() {
 void MatrixDisplay::draw() {
 	resetOperation();
 	for (int i = 0; i < 8; i++) {
-		writeRegisters(8 - i, imageBuffer[i * 4] , imageBuffer[i * 4 + 1], imageBuffer[i * 4 + 2], imageBuffer[i * 4 + 3], imageBuffer[i * 4]);
+		writeRegisters(8 - i, imageBuffer[i * 4] , imageBuffer[i * 4 + 1], imageBuffer[i * 4 + 2], imageBuffer[i * 4 + 3], 0);
 	}
 }
