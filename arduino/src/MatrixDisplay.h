@@ -13,9 +13,15 @@
 	#include "WProgram.h"
 #endif
 
+struct DisplayData {
+	byte * imageBuffer;
+	byte digits[4] = {};
+	word leds;
+};
+
 class MatrixDisplay {
 private:
-	byte* imageBuffer;
+	DisplayData displayData;
 	void loadCommands(word command0, word command1, word command2, word command3, word command4);
 	void writeRegisterSame(word address, word value);
 	void resetOperation();
@@ -23,7 +29,7 @@ public:
 	void setup();
 	void writeRegisters(word address, word value0, word value1, word value2, word value3, word value4);
 	void clear();
-	byte * getImageBuffer();
+	DisplayData * getDisplayData();
 	void draw();
 };
 

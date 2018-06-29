@@ -15,7 +15,7 @@ void ImagePad::loop() {
             cursor = (cursor + 1) & 1;
         }
     }
-    byte * buffer = board->getMatrixDisplay()->getImageBuffer();
+    byte * buffer = board->getMatrixDisplay()->getDisplayData()->imageBuffer;
     for (int i = 0; i < 2; i ++) {
         board->getCharacters()->draw(buffer, (byte *)&LEDMAP_IMAGES, 8, 8, images[i], i * 8, 0);
     }

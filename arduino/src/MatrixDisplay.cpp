@@ -11,7 +11,7 @@ void MatrixDisplay::setup() {
 	pinMode(LED_DIN, OUTPUT);
 	digitalWrite(LED_CS, HIGH);
 	pinMode(LED_BUILTIN, OUTPUT);
-	imageBuffer = (byte*) malloc(4*8);
+	displayData.imageBuffer = (byte*) malloc(4*8);
 	//
 	resetOperation();
 }
@@ -59,17 +59,20 @@ void MatrixDisplay::writeRegisters(word address, word value0, word value1, word 
 
 void MatrixDisplay::clear() {
 	for (short i = 0; i < 8 * 4; i++) {
-		imageBuffer[i] = 0;
+		displayData.imageBuffer[i] = 0;
 	}
 }
 
-byte * MatrixDisplay::getImageBuffer() {
-	return imageBuffer;
+DisplayData * MatrixDisplay::getDisplayData() {
+	return &displayData;
 }
 
 void MatrixDisplay::draw() {
-	resetOperation();
+	//resetOperation();
+	byte * img = displayData.imageBuffer;
+	byte specials [] = {displayData.digits[0], displayData.digits[1], displayData.digits[2], displayData.digits[3],
+						displayData.leds & 0xFF, ((displayData.leds >> 8) & 0xFF) << 4, 0, 0};
 	for (int i = 0; i < 8; i++) {
-		writeRegisters(8 - i, imageBuffer[i * 4] , imageBuffer[i * 4 + 1], imageBuffer[i * 4 + 2], imageBuffer[i * 4 + 3], 0);
+		writeRegisters(8 - i, img[i * 4] , img[i * 4 + 1], img[i * 4 + 2], img[i * 4 + 3], specials[7-i]);
 	}
 }

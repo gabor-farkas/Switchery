@@ -14,7 +14,7 @@ void FourDigits::loop() {
             cursor = (cursor + 1) & 3;
         }
     }
-    byte * buffer = board->getMatrixDisplay()->getImageBuffer();
+    byte * buffer = board->getMatrixDisplay()->getDisplayData()->imageBuffer;
     for (int i = 0; i < 4; i ++) {
         board->getCharacters()->draw(buffer, (byte *)&NUMBERS, 5, 3, digits[i], 16 + i * 4, 2);
     }

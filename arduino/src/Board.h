@@ -1,7 +1,7 @@
 #pragma once
 #include "MatrixDisplay.h"
 #include "Buttons.h"
-#include "Characters.h";
+#include "Characters.h"
 
 class Board
 {
