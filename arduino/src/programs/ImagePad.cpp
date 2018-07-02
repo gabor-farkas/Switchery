@@ -1,6 +1,6 @@
 #include "ImagePad.h"
-#include "../Characters.h";
-#include "../Images.h";
+#include "../Characters.h"
+#include "../Images.h"
 
 ImagePad::ImagePad(Board * board) {
     this->board = board;

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _IMAGES_h
+#define _IMAGES_h
 #include <Arduino.h>
 
 const byte LEDMAP_IMAGES[] = {
@@ -76,5 +77,7 @@ const byte LEDMAP_IMAGES[] = {
     0b00100100,
 };
 
-const byte *LEDMAP_IMAGES_SIMELY = (byte *)&LEDMAP_IMAGES;
-const byte *LEDMAP_IMAGES_SADFACE = (byte *)&LEDMAP_IMAGES + 8;
+//const byte *LEDMAP_IMAGES_SIMELY = (byte *)&LEDMAP_IMAGES;
+//const byte *LEDMAP_IMAGES_SADFACE = (byte *)&LEDMAP_IMAGES + 8;
+
+#endif
