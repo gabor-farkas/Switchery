@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "Characters.h"
 
-void Characters::draw(byte * canvas, byte * patterns, byte patternHeight, byte patternWidth, short characterCode, byte targetX, byte targetY) {
+void Characters::draw(byte * canvas, byte * patterns, byte patternHeight, byte patternWidth, short characterCode, short targetX, short targetY) {
 	if (targetX <= -patternWidth || targetY <= -patternHeight || targetX >= 32 || targetY >= 8)
 		return; // basic bounds check
 	byte * patternOffset = patterns + characterCode * patternHeight;

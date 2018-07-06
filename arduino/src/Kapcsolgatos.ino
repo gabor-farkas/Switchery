@@ -26,6 +26,10 @@ void loop()
 	while (true) {
 		delay(25);
 		board->readChar();
+		short lastChar = board->getLastCharacter();
+		if (lastChar != -1) {
+			Serial.println(board->getLastCharacter());
+		}
 		board->getMatrixDisplay()->clear();
 		//p->loop();
 		//ip->loop();

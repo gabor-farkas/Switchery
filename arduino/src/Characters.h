@@ -82,5 +82,5 @@ public:
 	 * draws on the given 32x8 canvas, uses the patterns array (eg NUMBERS above), and draws characterCode (offsetting the patterns array),
 	 * and position targetX-targetY
 	*/
-	void draw(byte * canvas, byte * patterns, byte patternHeight, byte patternWidth, short characterCode, byte targetX, byte targetY);
+	void draw(byte * canvas, byte * patterns, byte patternHeight, byte patternWidth, short characterCode, short targetX, short targetY);
 };

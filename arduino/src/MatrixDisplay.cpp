@@ -4,6 +4,7 @@
 
 #include "MatrixDisplay.h"
 
+const byte ledBitTranslationTable[8] = {0x08, 0x80, 0x04, 0x10, 0x01, 0x20, 0x02, 0x40};
 
 void MatrixDisplay::setup() {
 	pinMode(LED_CS, OUTPUT);
@@ -67,11 +68,19 @@ DisplayData * MatrixDisplay::getDisplayData() {
 	return &displayData;
 }
 
+byte MatrixDisplay::translateLedBits(byte input) {
+	byte result = 0;
+	for (int i = 0; i < 8; i ++) {
+		result |= ledBitTranslationTable[i] * (input & 1);
+		input >>= 1;
+	}
+	return result;
+}
+
 void MatrixDisplay::draw() {
-	//resetOperation();
 	byte * img = displayData.imageBuffer;
 	byte specials [] = {displayData.digits[0], displayData.digits[1], displayData.digits[2], displayData.digits[3],
-						displayData.leds & 0xFF, ((displayData.leds >> 8) & 0xFF) << 4, 0, 0};
+						translateLedBits(displayData.leds & 0xFF), translateLedBits(((displayData.leds >> 8) & 0x0F) << 4), 0, 0};
 	for (int i = 0; i < 8; i++) {
 		writeRegisters(8 - i, img[i * 4] , img[i * 4 + 1], img[i * 4 + 2], img[i * 4 + 3], specials[7-i]);
 	}

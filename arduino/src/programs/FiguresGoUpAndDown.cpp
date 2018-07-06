@@ -29,5 +29,11 @@ void FiguresGoUpAndDown::loop() {
         }
     }
     board->getCharacters()->draw(displayData->imageBuffer, (byte* )&LEDMAP_IMAGES, 8, 8, figure1.code, figure1.position, 0);
+    if (figure1.position > 24) {
+        board->getCharacters()->draw(displayData->imageBuffer, (byte* )&LEDMAP_IMAGES, 8, 8, figure1.code, figure1.position - 32, 0);
+    }
     board->getCharacters()->draw(displayData->imageBuffer, (byte* )&LEDMAP_IMAGES, 8, 8, figure2.code, figure2.position, 0);
+    if (figure2.position > 24) {
+        board->getCharacters()->draw(displayData->imageBuffer, (byte* )&LEDMAP_IMAGES, 8, 8, figure2.code, figure2.position - 32, 0);
+    }
 }
