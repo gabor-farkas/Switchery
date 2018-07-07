@@ -10,6 +10,7 @@ void SegmentSwitcher::loop() {
     if (charCode != -1) {
         byte subCode = charCode & 0xF;
         if (charCode >> 4 == PL) {
+   			tone(14, 880, 150);
             if (subCode == 7) {
                 cursor = (cursor + 1) & 3;
             } else {
@@ -17,6 +18,7 @@ void SegmentSwitcher::loop() {
             }
         }
         if (charCode >> 4 == PR) {
+   			tone(14, 880, 150);
             if (subCode == 7) {
                 displayData->leds = 0;
             }
