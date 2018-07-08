@@ -17,7 +17,7 @@ void setup()
 {
 	mySystem = new MySystem();
 	connections = new ConnectionManager(mySystem);
-	board = new Board();
+	board = new Board(mySystem);
 	characters = new Characters();
 
 	board->setup();

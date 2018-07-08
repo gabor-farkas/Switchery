@@ -56,6 +56,11 @@ public:
 	void clear();
 	DisplayData * getDisplayData();
 	void draw();
+	/**
+	 * The string can contain numeric digits and dots.
+	 * Overflow characters are ignored
+	 */ 
+	void setDigits(String * digits);
 };
 
 

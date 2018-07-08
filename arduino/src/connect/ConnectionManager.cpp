@@ -27,7 +27,5 @@ void ConnectionManager::regularCheck() {
             WiFi.disconnect();
             reconnectWifi();
         }
-    } else {
-        Serial.println("Wifi connected");
     }
 }

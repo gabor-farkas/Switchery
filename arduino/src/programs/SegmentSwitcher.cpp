@@ -7,10 +7,15 @@ SegmentSwitcher::SegmentSwitcher(Board * board) {
 void SegmentSwitcher::loop() {
     short charCode = board->getLastCharacter();
     DisplayData * displayData = board->getMatrixDisplay()->getDisplayData();
+    /*
+    String * timeString = board->mySystem->timeString;
+    String dotted = timeString->substring(0, 2) + "." + timeString->substring(2, 4);
+    board->getMatrixDisplay()->setDigits(&dotted);
+    */
     if (charCode != -1) {
         byte subCode = charCode & 0xF;
         if (charCode >> 4 == PL) {
-   			tone(14, 880, 150);
+   			board->playTone(880, 100);
             if (subCode == 7) {
                 cursor = (cursor + 1) & 3;
             } else {
@@ -18,7 +23,7 @@ void SegmentSwitcher::loop() {
             }
         }
         if (charCode >> 4 == PR) {
-   			tone(14, 880, 150);
+   			board->playTone(880, 100);
             if (subCode == 7) {
                 displayData->leds = 0;
             }

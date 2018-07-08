@@ -1,4 +1,5 @@
 #pragma once
+#include <Arduino.h>
 
 class TimerCallback {
     public:
@@ -15,6 +16,7 @@ class MySystem {
         TimerRegistration timerRegistrations[16];
         int numberOfTimerRegistrations = 0;
     public:
+        String * timeString = new String("");
         void registerTimer(short intervalMs, TimerCallback * timerCallback);
         void tick(short timePassedMs);
 };

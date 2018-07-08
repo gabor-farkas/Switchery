@@ -23,7 +23,7 @@ void MiniPiano::loop()
             int octaveOffset = note / 7;
             if (groupCode == NR) octaveOffset ++;
             float freq = C4 * (1 << octaveOffset) * pow(singleNoteMultiplier, cMajorScale[subNote]);
-            tone(14, floor(freq), 250);
+            board->playTone( floor(freq), 250);
         }
     }
 }

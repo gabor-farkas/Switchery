@@ -5,28 +5,20 @@
 TimeSynchronizer::TimeSynchronizer(MySystem * mySystem) {
     mySystem->registerTimer(1000, this);
     syncTime();
+    this->mySystem = mySystem;
 }
 
 void TimeSynchronizer::syncTime() {
     if (refetchCountDown -- < 0) {
         if (WiFi.status() == WL_CONNECTED) {
-            refetchCountDown = 5;
+            refetchCountDown = 60;
             HTTPClient http;
-            const char * headerNames [] = {"Date"};
-            http.collectHeaders(headerNames, 1);
-            http.begin("http://intro.hu");
+            http.begin("http://switchery-203316.appspot.com/time.text.bud");
             int httpCode = http.GET();
             if (httpCode == 200) {
-                String dateHeader = http.header(headerNames[1]);
-                //  Fri, 06 Jul 2018 21:34:56 GMT
-                int firstColonIndex = dateHeader.indexOf(':');
-                
-                int headerCount = http.headers();
-                for (int i = 0; i < headerCount; i ++) {
-                    String headerName = http.headerName(i);
-                    Serial.println(headerName);
-                    Serial.println(http.header(i));
-                }
+                String time = http.getString();
+                Serial.println(time);
+                mySystem->timeString = new String(time);
             } else {
                 Serial.print("Time fetch http responded:");
                 Serial.println(httpCode);

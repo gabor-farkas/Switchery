@@ -6,6 +6,19 @@
 
 const byte ledBitTranslationTable[8] = {0x08, 0x80, 0x04, 0x10, 0x01, 0x20, 0x02, 0x40};
 
+const byte digitSegments[] = {
+	0b1111110,
+	0b0110000,
+	0b1101101,
+	0b1111001,
+	0b0110011,
+	0b1011011,
+	0b1011111,
+	0b1110000,
+	0b1111111,
+	0b1111011
+};
+
 void MatrixDisplay::setup() {
 	pinMode(LED_CS, OUTPUT);
 	pinMode(LED_CLK, OUTPUT);
@@ -84,4 +97,21 @@ void MatrixDisplay::draw() {
 	for (int i = 0; i < 8; i++) {
 		writeRegisters(8 - i, img[i * 4] , img[i * 4 + 1], img[i * 4 + 2], img[i * 4 + 3], specials[7-i]);
 	}
+}
+
+void MatrixDisplay::setDigits(String * digits) {
+	unsigned int digitCount = 0;
+	unsigned int index = 0;
+	do {
+		char chr = digits->charAt(index);
+		if (chr >= '0' && chr <= '9') {
+			displayData.digits[digitCount] = digitSegments[chr - '0'];
+			digitCount ++;
+		} else if (chr == '.') {
+			if (digitCount > 0) {
+				displayData.digits[digitCount-1] |= 0x80;
+			}
+		}
+		index ++;
+	} while (digitCount < 4 && digits->length() > index);
 }
