@@ -51,7 +51,7 @@ A home toy project for kids, based on Wemos D1 Mini (Arduino)
 |LOAD/¬CS|12||13|CLK|
 
 
-
+7 segment:
 |||||||
 |-|-|-|-|-|-|-|
 |D1|A|F|D2|D3|B|
