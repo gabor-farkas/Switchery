@@ -52,7 +52,7 @@ A home toy project for kids, based on Wemos D1 Mini (Arduino)
 
 
 
-|7|se|gm|en|t|-|
+|||||||
 |-|-|-|-|-|-|-|
 |D1|A|F|D2|D3|B|
 |12|11|10|9|8|7|
@@ -63,4 +63,5 @@ A home toy project for kids, based on Wemos D1 Mini (Arduino)
 
 ## Wiring
 <img src="./static/wiring.svg">
+
 ([Edit](https://drive.google.com/file/d/1ygxo5pzyNBqcTJ3JTJQE1Ou09688x8HK/view?usp=sharing))
