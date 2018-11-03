@@ -50,7 +50,9 @@ A home toy project for kids, based on Wemos D1 Mini (Arduino)
 |DIG1|11||14|SEGA|
 |LOAD/¬CS|12||13|CLK|
 
-|7|se|gm|en|t||
+
+
+|7|se|gm|en|t|-|
 |-|-|-|-|-|-|-|
 |D1|A|F|D2|D3|B|
 |12|11|10|9|8|7|
@@ -60,5 +62,5 @@ A home toy project for kids, based on Wemos D1 Mini (Arduino)
 
 
 ## Wiring
-![Wiring diagram](static/wiring.svg?raw=true "Wiring diagram")
+<img src="./static/wiring.svg">
 ([Edit](https://drive.google.com/file/d/1ygxo5pzyNBqcTJ3JTJQE1Ou09688x8HK/view?usp=sharing))
